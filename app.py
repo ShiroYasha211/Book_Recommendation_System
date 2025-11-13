@@ -17,7 +17,6 @@ def main():
     except Exception as e:
         print(f"خطأ في تشغيل التطبيق: {e}")
         
-        # إنشاء نافذة خطأ بسيطة
         root = ctk.CTk()
         root.title("خطأ في التشغيل")
         root.geometry("400x200")
