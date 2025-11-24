@@ -17,12 +17,15 @@ class DataManager:
             print(f"خطأ في تحميل البيانات: {e}")
     
     def _clean_data(self):
+        # ملء القيم الفارغة
         self.df['description'] = self.df['description'].fillna('لا يوجد وصف')
         self.df['tags'] = self.df['tags'].fillna('')
         self.df['author'] = self.df['author'].fillna('مؤلف غير معروف')
         
+        # إضافة عمود الصعوبة
         self._add_difficulty_level()
         
+        # إضافة عمود مستوى التقييم
         self._add_rating_category()
     
     def _add_difficulty_level(self):
@@ -30,6 +33,7 @@ class DataManager:
             pages = row['pages']
             tags = str(row['tags']).lower()
             
+            # قواعد بسيطة لتحديد الصعوبة
             if pages < 300:
                 if any(word in tags for word in ['beginner', 'introduction', 'basics', 'مبتدئ']):
                     return 'مبتدئ'
@@ -86,6 +90,7 @@ class DataManager:
         if not query:
             return pd.DataFrame()
         
+        # البحث في العنوان، المؤلف، الفئة، الوصف، والعلامات
         mask = (
             self.df['title'].str.contains(query, case=False, na=False) |
             self.df['author'].str.contains(query, case=False, na=False) |

@@ -4,6 +4,9 @@ from tkinter import messagebox
 from data_manager import DataManager
 from recommender import BookRecommender
 from book_card import BookCard, BookDetailsDialog
+from library_manager import LibraryManager
+from add_book_dialog import AddBookDialog
+from my_library_window import MyLibraryWindow
 from config import CARD_CONFIG, COLORS, FONTS, ICONS, APP_CONFIG, FILTER_OPTIONS, MESSAGES
 from typing import List, Dict
 import threading
@@ -12,15 +15,22 @@ class MainApplication(ctk.CTk):
     def __init__(self):
         super().__init__()
         
+        # إعداد المتغيرات أولاً
         self.current_theme = APP_CONFIG['theme']
         self.colors = COLORS[self.current_theme]
         
+        # إعداد النافذة الرئيسية
         self.setup_main_window()
         
+        # إعداد البيانات
         self.data_manager = None
         self.recommender = None
         self.current_recommendations = []
         
+        # إعداد المكتبة الشخصية
+        self.library_manager = LibraryManager()
+        
+        # إعداد الواجهة
         self.create_widgets()
         self.load_data()
     
@@ -51,6 +61,7 @@ class MainApplication(ctk.CTk):
         search_frame = ctk.CTkFrame(self, fg_color=self.colors['surface'])
         search_frame.grid(row=0, column=0, columnspan=2, sticky="ew", padx=20, pady=20)
         search_frame.grid_columnconfigure(1, weight=1)
+        search_frame.grid_columnconfigure(4, weight=1)  # عمود جديد للأزرار
         
         # العنوان
         title_label = ctk.CTkLabel(
@@ -95,6 +106,28 @@ class MainApplication(ctk.CTk):
             hover_color=self._adjust_color(self.colors['secondary'], -0.2)
         )
         stats_btn.grid(row=1, column=2, padx=10, pady=10, sticky="w")
+        
+        # زر إضافة كتاب للمكتبة الشخصية
+        add_book_btn = ctk.CTkButton(
+            search_frame,
+            text=f"{ICONS['add']} إضافة كتاب لمكتبي",
+            command=self.show_add_book_dialog,
+            font=FONTS['button'],
+            fg_color=self.colors['success'],
+            hover_color=self._adjust_color(self.colors['success'], -0.2)
+        )
+        add_book_btn.grid(row=1, column=3, padx=10, pady=10, sticky="w")
+        
+        # زر عرض المكتبة الشخصية
+        show_library_btn = ctk.CTkButton(
+            search_frame,
+            text=f"{ICONS['book']} عرض مكتبي",
+            command=self.show_my_library,
+            font=FONTS['button'],
+            fg_color=self.colors['accent'],
+            hover_color=self._adjust_color(self.colors['accent'], -0.2)
+        )
+        show_library_btn.grid(row=1, column=4, padx=10, pady=10, sticky="w")
         
         # قسم المرشحات
         filters_frame = ctk.CTkFrame(search_frame, fg_color="transparent")
@@ -614,3 +647,47 @@ class MainApplication(ctk.CTk):
         """تعديل لون بسيط - في التطبيق الحقيقي سنستخدم مكتبة ألوان متقدمة"""
         # تبسيط: إرجاع نفس اللون مع تغيير بسيط
         return color
+    
+    # ========================================
+    # وظائف المكتبة الشخصية
+    # ========================================
+    
+    def show_add_book_dialog(self):
+        """عرض نافذة إضافة كتاب جديد"""
+        try:
+            dialog = AddBookDialog(self, self.library_manager, self.colors)
+            # التركيز على النافذة المنبثقة
+            dialog.focus_set()
+            dialog.grab_set()
+        except Exception as e:
+            error_msg = f"خطأ في فتح نافذة إضافة الكتاب: {str(e)}"
+            print(f"❌ {error_msg}")
+            self.show_error(error_msg)
+    
+    def show_my_library(self):
+        """عرض نافذة المكتبة الشخصية"""
+        try:
+            # إنشاء نافذة المكتبة الشخصية
+            library_window = MyLibraryWindow(self, self.library_manager, self.colors)
+            
+            # التركيز على النافذة الجديدة
+            library_window.focus_set()
+            
+        except Exception as e:
+            error_msg = f"خطأ في فتح نافذة المكتبة الشخصية: {str(e)}"
+            print(f"❌ {error_msg}")
+            self.show_error(error_msg)
+    
+    def cleanup(self):
+        """تنظيف الموارد قبل إغلاق التطبيق"""
+        try:
+            # إغلاق اتصال قاعدة بيانات المكتبة الشخصية
+            if hasattr(self, 'library_manager'):
+                self.library_manager.close()
+        except Exception as e:
+            print(f"خطأ في تنظيف الموارد: {e}")
+        finally:
+            try:
+                self.destroy()
+            except:
+                pass

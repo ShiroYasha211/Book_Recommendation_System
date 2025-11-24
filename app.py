@@ -7,16 +7,30 @@ import customtkinter as ctk
 from main_app import MainApplication
 
 def main():
+    # إعداد المظهر
     ctk.set_appearance_mode("dark") 
-    ctk.set_default_color_theme("blue")  
+    ctk.set_default_color_theme("blue") 
     
     try:
+        # إنشاء وتشغيل التطبيق
         app = MainApplication()
+        
+        # إعداد تنظيف الموارد عند إغلاق التطبيق
+        def on_closing():
+            try:
+                app.cleanup()
+            except Exception as e:
+                print(f"خطأ في تنظيف الموارد: {e}")
+            finally:
+                app.destroy()
+        
+        app.protocol("WM_DELETE_WINDOW", on_closing)
         app.mainloop()
         
     except Exception as e:
         print(f"خطأ في تشغيل التطبيق: {e}")
         
+        # إنشاء نافذة خطأ بسيطة
         root = ctk.CTk()
         root.title("خطأ في التشغيل")
         root.geometry("400x200")

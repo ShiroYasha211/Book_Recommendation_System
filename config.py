@@ -1,36 +1,40 @@
+
+# الألوان الرئيسية
 COLORS = {
+    # ألوان داكنة
     'dark': {
-        'primary': '#2E8B57',           
-        'secondary': '#4169E1',         
-        'accent': '#FF6B35',            
-        'background': '#1E1E1E',        
-        'surface': '#2D2D2D',           
-        'text': '#FFFFFF',              
-        'text_secondary': '#B0B0B0',    
-        'border': '#404040',            
-        'success': '#28A745',           
-        'warning': '#FFC107',           
-        'error': '#DC3545',             
-        'info': '#17A2B8'               
+        'primary': '#2E8B57',           # أخضر داكن (SeaGreen)
+        'secondary': '#4169E1',         # أزرق ملكي (Royal Blue)
+        'accent': '#FF6B35',            # برتقالي أحمر (Orange Red)
+        'background': '#1E1E1E',        # أسود رمادي (Dark Gray)
+        'surface': '#2D2D2D',           # رمادي داكن
+        'text': '#FFFFFF',              # أبيض
+        'text_secondary': '#B0B0B0',    # رمادي فاتح
+        'border': '#404040',            # رمادي متوسط
+        'success': '#28A745',           # أخضر
+        'warning': '#FFC107',           # أصفر
+        'error': '#DC3545',             # أحمر
+        'info': '#17A2B8'               # أزرق فاتح
     },
     
+    # ألوان فاتحة
     'light': {
-        'primary': '#2E8B57',           
-        'secondary': '#4169E1',         
-        'accent': '#FF6B35',            
-        'background': '#F8F9FA',       
-        'surface': '#FFFFFF',           
-        'text': '#212529',              
-        'text_secondary': '#6C757D',    
-        'border': '#DEE2E6',            
-        'success': '#28A745',           
-        'warning': '#FFC107',           
-        'error': '#DC3545',             
-        'info': '#17A2B8'               
+        'primary': '#2E8B57',           # أخضر داكن
+        'secondary': '#4169E1',         # أزرق ملكي
+        'accent': '#FF6B35',            # برتقالي أحمر
+        'background': '#F8F9FA',        # أبيض مائل للرمادي
+        'surface': '#FFFFFF',           # أبيض نقي
+        'text': '#212529',              # أسود مائل للرمادي
+        'text_secondary': '#6C757D',    # رمادي متوسط
+        'border': '#DEE2E6',            # رمادي فاتح
+        'success': '#28A745',           # أخضر
+        'warning': '#FFC107',           # أصفر
+        'error': '#DC3545',             # أحمر
+        'info': '#17A2B8'               # أزرق فاتح
     }
 }
 
-
+# إعدادات الخطوط
 FONTS = {
     'title': ('Arial', 18, 'bold'),
     'subtitle': ('Arial', 14, 'bold'),
@@ -40,18 +44,18 @@ FONTS = {
     'entry': ('Arial', 11, 'normal')
 }
 
-
+# إعدادات التطبيق
 APP_CONFIG = {
     'title': 'نظام توصية كتب البرمجة',
     'width': 1200,
     'height': 800,
     'min_width': 1000,
     'min_height': 600,
-    'icon_path': None, 
-    'theme': 'dark'     
+    'icon_path': None,  # مسار الأيقونة إذا وجدت
+    'theme': 'dark'     # 'dark' أو 'light'
 }
 
-
+# قوائم الخيارات
 FILTER_OPTIONS = {
     'categories': ['الكل'],
     'languages': ['الكل'],
@@ -59,6 +63,7 @@ FILTER_OPTIONS = {
     'rating_min': [0.0, 3.0, 3.5, 4.0, 4.5]
 }
 
+# إعدادات البطاقات
 CARD_CONFIG = {
     'width': 350,
     'height': 200,
@@ -67,6 +72,7 @@ CARD_CONFIG = {
     'shadow_offset': (2, 2)
 }
 
+# إعدادات الأيقونات (باستخدام أحرف خاصة)
 ICONS = {
     'search': '🔍',
     'filter': '🔧',
@@ -90,9 +96,13 @@ ICONS = {
     'search_results': '🔍',
     'reset': '🔄',
     'close': '❌',
-    'menu': '📋'
+    'menu': '📋',
+    'add': '➕',
+    'edit': '✏️',
+    'delete': '🗑️'
 }
 
+# رسائل التطبيق
 MESSAGES = {
     'search_placeholder': 'ابحث عن كتاب أو مواضيع برمجية...',
     'no_results': 'لم يتم العثور على نتائج',

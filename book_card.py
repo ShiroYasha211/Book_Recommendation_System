@@ -5,7 +5,6 @@ from typing import Dict, Callable
 from config import COLORS, FONTS, ICONS, CARD_CONFIG
 
 class BookCard(ctk.CTkFrame):
-    """بطاقة عرض كتاب واحدة"""
     
     def __init__(self, parent, book_data: Dict, on_click: Callable = None, **kwargs):
         super().__init__(parent, **kwargs)
@@ -389,5 +388,4 @@ class BookDetailsDialog(ctk.CTkToplevel):
         return colors.get(difficulty, self.colors['text_secondary'])
     
     def _adjust_color(self, color: str, factor: float) -> str:
-        """تعديل لون بسيط"""
         return color
